@@ -70,7 +70,7 @@ public class CakeView extends SurfaceView {
      * the position of the bottom left corner of the candle
      */
     public void drawCandle(Canvas canvas, float left, float bottom) {
-        canvas.drawRect(left, bottom - candleHeight-3, left + candleWidth, bottom, candlePaint);
+        canvas.drawRect(left, bottom - candleHeight, left + candleWidth, bottom, candlePaint);
 
         if (cakeModel.candlesLit == true) {
             //draw the outer flame
