@@ -7,6 +7,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
 
+import java.util.Random;
+
 public class CakeView extends SurfaceView {
 
     /* These are the paints we'll use to draw the birthday cake below */
@@ -16,6 +18,8 @@ public class CakeView extends SurfaceView {
     Paint outerFlamePaint = new Paint();
     Paint innerFlamePaint = new Paint();
     Paint wickPaint = new Paint();
+    Paint balloonPaint = new Paint();
+    Paint stringPaint = new Paint();
 
     /* These constants define the dimensions of the cake.  While defining constants for things
         like this is good practice, we could be calculating these better by detecting
@@ -33,6 +37,10 @@ public class CakeView extends SurfaceView {
     public static final float wickWidth = 6.0f;
     public static final float outerFlameRadius = 30.0f;
     public static final float innerFlameRadius = 15.0f;
+    public static final float balloonWidth = 200.0f;
+    public static final float balloonHeight = 250.0f;
+    public static final float stringWidth = 15.0f;
+    public static final float stringHeight = 150.0f;
 
     private CakeModel cakeModel;
 
@@ -59,6 +67,9 @@ public class CakeView extends SurfaceView {
         innerFlamePaint.setStyle(Paint.Style.FILL);
         wickPaint.setColor(Color.BLACK);
         wickPaint.setStyle(Paint.Style.FILL);
+        balloonPaint.setColor(Color.BLUE); //set color of balloon for lab4
+        balloonPaint.setStyle(Paint.Style.FILL);
+        stringPaint.setColor(Color.GRAY);
 
         setBackgroundColor(Color.WHITE);  //better than black default
 
@@ -86,6 +97,12 @@ public class CakeView extends SurfaceView {
         float wickLeft = left + candleWidth/2 - wickWidth/2;
         float wickTop = bottom - wickHeight - candleHeight;
         canvas.drawRect(wickLeft, wickTop, wickLeft + wickWidth, wickTop + wickHeight, wickPaint);
+
+    }
+
+    public void drawBalloon(Canvas canvas, float touchX, float touchY) {
+        canvas.drawRect(touchX - stringWidth/2, touchY + balloonHeight/2, touchX + stringWidth/2, touchY + balloonHeight/2 + stringHeight, stringPaint);
+        canvas.drawOval(touchX - balloonWidth/2, touchY - balloonHeight/2, touchX + balloonWidth/2, touchY + balloonHeight/2, balloonPaint);
 
     }
 
@@ -127,6 +144,8 @@ public class CakeView extends SurfaceView {
             drawCandle(canvas, cakeLeft + cakeWidth / 3 - candleWidth / 2, cakeTop);
         }
 
+        //Now a random balloon
+        drawBalloon(canvas, cakeModel.touchX, cakeModel.touchY);
     }//onDraw
 
     public CakeModel getCakeModel() {
